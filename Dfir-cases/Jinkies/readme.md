@@ -49,8 +49,7 @@ HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Shares
 Para localizar esta información dentro del conjunto de artefactos recolectados, se utilizó el siguiente comando en PowerShell:
 ```
 Get-ChildItem . -Recurse -File |
-Select-String"HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Shares" |
-Select-String"Path"
+Select-String"HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Shares" 
 ```
 <img width="1312" height="639" alt="image" src="https://github.com/user-attachments/assets/46a48791-5e15-4d0c-b3b2-3fdd46f43e48" />
 
