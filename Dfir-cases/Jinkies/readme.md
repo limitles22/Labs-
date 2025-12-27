@@ -1,4 +1,4 @@
-# DFIR Case Study – Jinkies Incident Analysis
+# Jinkies Incident Analysis
 
 ## Overview
 
@@ -43,14 +43,18 @@ Advertencia: este Sherlock requiere un elemento de OSINT y los jugadores tendrá
 Para identificar las carpetas compartidas en el sistema, se analizaron los artefactos del Registro de Windows.
 
 En sistemas Windows, los recursos compartidos se almacenan en la siguiente clave:
+
 ```
 HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Shares
 ```
+
 Para localizar esta información dentro del conjunto de artefactos recolectados, se utilizó el siguiente comando en PowerShell:
 ```
+
 Get-ChildItem . -Recurse -File |
 Select-String"HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Shares" 
 ```
+
 <img width="1312" height="639" alt="image" src="https://github.com/user-attachments/assets/46a48791-5e15-4d0c-b3b2-3fdd46f43e48" />
 
 
@@ -63,13 +67,18 @@ Respuesta: - `C:\Users\Velma\Documents` - `C:\Users`
 
 ## What was the file that gave the attacker access to the user's account?
 
+
 Dado que el atacante tuvo acceso a la carpeta Documents del usuario Velma, se procedió a inspeccionar su contenido en busca de archivos que pudieran contener credenciales.
 
+
 Se listaron los archivos presentes:
+
 ```
 Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\users\Velma\Documents" -Recurse -File
 ```
+
 Posteriormente, se filtraron archivos que contuvieran la palabra password:
+
 ```
 Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\users\Velma\Documents" -Recurse -File | Select-String 'password'
 ```
@@ -79,18 +88,24 @@ Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\
 
 Se puede ver en el primer resultado, un archivo .ibd, correspondiente a una base de datos MySQL comunmente utilizada para almacenar datos estructurados. 
 
+
 Decidí por ver lo que habia dentro del archivo, por lo que, primero tuve que confirmar su ubicación:
+
 ```
 Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output" ` -Recurse -File -Filter "bk_db.ibd" | Select-Object FullName
 ```
+
 Para luego usar: 
+
 ```
 strings.exe "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\users\Velma\Documents\Python Scripts + things\web server project\testing\logon website\bk\bk_db.ibd"
 ```
+
 <img width="1464" height="754" alt="image" src="https://github.com/user-attachments/assets/1c036dce-d7a2-4b04-9b28-14b6829ced64" />
 
 
 EL archivo contiene usuarios y contraseñas.
+
 
 Respuesta:  `bk_db.ibd`
 
@@ -98,12 +113,16 @@ Respuesta:  `bk_db.ibd`
 
 ## How many user credentials were found in the file?
 
+
 Para determinar cuántas credenciales estaban almacenadas en el archivo, se extrajeron cadenas legibles utilizando strings.exe y se filtraron direcciones de correo electrónico:
+
 ```
 strings.exe "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\users\Velma\Documents\Python Scripts + things\web server project\testing\logon website\bk\bk_db.ibd" | Select-String "@" | Measure-Object
 ```
 
+
 <img width="1720" height="156" alt="image" src="https://github.com/user-attachments/assets/2fd3f2ba-48ec-44e3-bc2d-c841bf993684" />
+
 
 Respuesta: `216`
 
@@ -141,7 +160,9 @@ Para hashear la contraseña de velma: `peakTwins2023fc`, utilice el generador de
 
 <img width="978" height="748" alt="image" src="https://github.com/user-attachments/assets/7b76302e-3797-471c-b97c-373463f338ad" />
 
+
 Podemos ver que el hash generado coincide con el anterior.
+
 
 Respuesta: `Yes`
 
