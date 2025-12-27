@@ -53,7 +53,9 @@ Select-String"HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Shares"
 ```
 <img width="1312" height="639" alt="image" src="https://github.com/user-attachments/assets/46a48791-5e15-4d0c-b3b2-3fdd46f43e48" />
 
+
 El análisis revelo dos carpetas siendo compartidas dentro de la ruta "path" 
+
 
 Respuesta: - `C:\Users\Velma\Documents` - `C:\Users`
 
@@ -74,8 +76,9 @@ Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\
 
 <img width="1839" height="722" alt="image" src="https://github.com/user-attachments/assets/547e2c32-daaa-4663-81bf-cab08f088ce1" />
 
+
 Se puede ver en el primer resultado, un archivo .ibd, correspondiente a una base de datos MySQL comunmente utilizada para almacenar datos estructurados. 
-Se confirmo su ubicación con:
+Decidí ver lo que habia dentro del archivo por lo que, primero tuve que confirmar su ubicación:
 ```
 Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output" ` -Recurse -File -Filter "bk_db.ibd" | Select-Object FullName
 ```
@@ -85,9 +88,10 @@ strings.exe "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\
 ```
 <img width="1464" height="754" alt="image" src="https://github.com/user-attachments/assets/1c036dce-d7a2-4b04-9b28-14b6829ced64" />
 
+
 EL archivo contiene usuarios y contraseñas.
 
-Respuesta: - 'bk_db.ibd'
+Respuesta: - `bk_db.ibd`
 
 ---
 
