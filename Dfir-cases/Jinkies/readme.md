@@ -10,7 +10,7 @@ A continuación, presento el write-up completo del caso.
 
 ---
 
-## Tools Commonly Used
+## Tools Used
 
 - KAPE
 - Chainsaw
