@@ -280,7 +280,7 @@ Si bien el $MFT permite identificar la existencia del archivo, su ruta, timestam
 
 Para intentar recuperar el contenido del archivo, fue necesario analizar el $MFT a nivel binario, utilizando 010 Editor.
 
-Para ubicar el registro del archivo en MFT user en powershell el siguiente comando:
+Para ubicar el registro del archivo en MFT use el siguiente comando en powershell:
 
 ```
 Import-Csv C:\Users\limitles\mft.csv |
@@ -291,4 +291,29 @@ Format-List
 <img width="846" height="561" alt="image" src="https://github.com/user-attachments/assets/06e7e204-7a78-42fd-b2cf-61173143765b" />
 
 
+De aquí obtenemos el entrynumber: 78533.
+
+El Entry Number es el identificador único de un registro dentro del $MFT (Master File Table).
+
+Cada archivo o directorio en NTFS tiene asignado un registro MFT, y el Entry Number indica qué posición ocupa ese registro dentro del $MFT.
+
+El $MFT es un archivo binario, y herramientas como 010 Editor trabajan con offsets en hexadecimal.
+
+Por eso, para ubicar manualmente un registro MFT específico, es necesario convertir el Entry Number (decimal) a hexadecimal.
+
+```
+'{0:X8}' -f 80417792
+```
+
+Ese comando toma un Entry Number en decimal, lo convierte a hexadecimal, 
+
+y lo presenta con el formato correcto para trabajar con el $MFT en herramientas hexadecimales como 010 Editor.
+
+
+<img width="1036" height="783" alt="image" src="https://github.com/user-attachments/assets/b120f682-cca8-42b2-98df-cfbc37d20ac3" />
+
+
+Ahora si, podemos observar el handle o firma del atacante.
+
+Respuesta: `pwnmaster12`
 
