@@ -108,3 +108,44 @@ strings.exe "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\
 Respuesta: `216`
 
 ---
+
+## What is the NT hash of the user's password?
+
+Al tratarse de una cuenta local, el hash NT del usuario Velma se encuentra en el hive SAM, protegido mediante la BootKey almacenada en el hive SYSTEM.
+
+Se utilizó la herramienta Impacket–secretsdump para extraer la información:
+
+```
+python.exe 'C:\Users\limitles\tools\impacket\examples\secretsdump.py' -sam "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\Windows\system32\config\SAM" -system "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\Windows\system32\config\SYSTEM" LOCAL
+```
+
+<img width="1909" height="184" alt="image" src="https://github.com/user-attachments/assets/aa5d42a2-9895-4228-850a-ff6e7364a109" />
+
+Podemos ver el NT hash del usuario.
+
+Respuesta: `967452709ae89eaeef4e2c951c3882ce`
+
+---
+
+## Is the user's computer password the same as the password found in the ibd file? (Yes or No)
+
+Para validar si ambas contraseñas coincidían, se extrajo la contraseña del archivo bk_db.ibd:
+
+```
+strings.exe "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\users\Velma\Documents\Python Scripts + things\web server project\testing\logon website\bk\bk_db.ibd" | select-string "velma"
+```
+
+<img width="1857" height="82" alt="image" src="https://github.com/user-attachments/assets/7c55e140-5a30-4056-a2e7-224225591579" />
+
+Para hashear la contraseña de velma: `peakTwins2023fc`, utilice el generador de hashes Code Beautify 
+
+<img width="978" height="748" alt="image" src="https://github.com/user-attachments/assets/7b76302e-3797-471c-b97c-373463f338ad" />
+
+Podemos ver que el hash generado coincide con el anterior.
+
+Respuesta: `Yes`
+
+---
+
+
+
