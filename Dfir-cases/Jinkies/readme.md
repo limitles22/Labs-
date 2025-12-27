@@ -166,7 +166,129 @@ Podemos ver que el hash generado coincide con el anterior.
 
 Respuesta: `Yes`
 
+
 ---
+
+## What was the time the attacker first interactively logged on to our user's host?
+
+La respuesta a esta pregunta lo obtendriamos analizando logs. 
+Pude utilizar el visor de eventos de Windows, pero, decidi optar por Chainsaw. 
+
+Utilice dos filtros, uno el evento 4624 de logon exitoso. 
+Segundo, el logon type 3. Este hace referencia a un inicio de sesion remota a través de la red.
+
+```
+chainsaw.exe search `
+-t "Event.System.EventID: =4624" -t "Event.EventData.LogonType: =3" `
+"C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\Windows\system32\winevt\logs" --skip-errors
+```
+
+<img width="702" height="744" alt="image" src="https://github.com/user-attachments/assets/9f64c5c9-c623-4d07-8b3d-f859cd26c9b6" />
+
+Este evento contiene la información que necesitamos.
+
+Respuesta: `2023-10-06 17:17:23`
+
+---
+
+## What's the first command the attacker issues into the Command Line?
+
+
+Para responder esta pregunta decidi usar Chainsaw y filtrar por: 
+hora en la que el atacante accedio al host remotamente y por la palabra 'cmd.exe' 
+ya que nos interesa saber que comando ingreso.
+
+```
+chainsaw.exe search `
+--timestamp "Event.System.TimeCreated_attributes.SystemTime" --from "2023-10-06T17:17:23"`
+"cmd.exe" `
+"C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\Windows\system32\winevt\logs" --skip-errors
+```
+
+<img width="1232" height="699" alt="image" src="https://github.com/user-attachments/assets/acb783cb-2a5a-4249-a283-4c4a668eded5" />
+
+
+De los 19 resultados, el segundo contiene la información que necesitamos.
+
+Respuesta: `whoami`
+
+---
+
+## What is the name of the file that the attacker opens in VSCode shortly before launching the web browser?
+
+
+Para responder esta pregunta decidí seguir con Chainsaw y aplicar estos filtros:
+
+```
+chainsaw.exe search `
+--timestamp "Event.System.TimeCreated_attributes.SystemTime" --from "2023-10-06T17:17:23" `
+"cmd.exe" `
+"Code.exe" `
+"C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\Windows\system32\winevt\logs" --skip-errors
+```
+
+Priorice filtrar 'cmd.exe' sobre 'Code.exe' porque este patrón, en el cual Code es el padre de cmd, 
+indica que abrio un archivo dentro de VS Code, usó el terminal integrado y ejecuto comandos.
+
+<img width="1473" height="703" alt="image" src="https://github.com/user-attachments/assets/97c28930-db16-433f-9069-135c8aabfc67" />
+
+
+En este evento podemos ver cual es el archivo.
+
+Respuesta: `Version-1.0.1 - TERMINAL LOGIN.py`
+
+---
+
+## What's the domain name of the location the attacker likely exfiltrated the file to?
+
+Esta información podemos encontrarla en el archivo History de Google Chrome.
+Decidi usar la herramienta Hindsight para convertir el archivo History a .xlsx y poder visualizarlo en TimelineExplorer
+
+```
+python.exe .\hindsight.py -i "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\users\Velma\Appdata\Local\Google\Chrome\User Data\Default" -o out
+```
+
+En TimelineExplorer filtre por la fecha en el que el atacante accedio al host 
+
+<img width="1273" height="642" alt="image" src="https://github.com/user-attachments/assets/8717a46f-4d78-450a-885a-185248ef19d8" />
+
+Esta url generalmente contiene código fuente, scripts y de más que los atacantes utilizan. 
+
+Respuesta: `pastes.io`
+
+---
+
+## What is the handle of the attacker?
+
+En general, en estos laboratorios, el hanlde o "firma" del atacante podemos encontrarlo en archivo dentro del sistema con extensiones como:
+.txt o scripts (.ps1, .py).
+Decidí usar MFTECMD para convertir el archvio $MFT (es la base de datos central del sistema de archivos NTFS) 
+a un formato visible en TimelineExplorer 
+
+```
+MFTECMD.exe -f 'C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\$MFT' --csv . --csvf mft.csv
+```
+
+Ya con el .csv en manos, dentro de TimelineExplorer filtre por Parent Path, Extension y Created 0x10 
+
+<img width="1274" height="696" alt="image" src="https://github.com/user-attachments/assets/51e8a87e-f4b8-4d8f-b095-e5221ff7220c" />
+
+El archivo 'learn.txt' fue el primero creado desde el path .\Users\Velma\Pictures a las 17:23:46.
+Minutos después del logon en el host. 
+
+Si bien el $MFT permite identificar la existencia del archivo, su ruta, timestamps y metadatos NTFS, no almacena de forma directa el contenido completo del archivo.
+
+Para intentar recuperar el contenido del archivo, fue necesario analizar el $MFT a nivel binario, utilizando 010 Editor.
+
+Para ubicar el registro del archivo en MFT user en powershell el siguiente comando:
+
+```
+Import-Csv C:\Users\limitles\mft.csv |
+Where-Object { $_.FileName -eq "learn.txt" } |
+Format-List
+```
+
+<img width="846" height="561" alt="image" src="https://github.com/user-attachments/assets/06e7e204-7a78-42fd-b2cf-61173143765b" />
 
 
 
