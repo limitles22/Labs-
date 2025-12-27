@@ -34,7 +34,7 @@ Aparte de esto, no hay mucha más información por parte de la empresa. Se ha in
 
 Advertencia: este Sherlock requiere un elemento de OSINT y los jugadores tendrán que interactuar con servicios de terceros en Internet.
 
-Traducción realizada con la versión gratuita del traductor DeepL.com
+
 
 ---
 
@@ -78,7 +78,8 @@ Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\
 
 
 Se puede ver en el primer resultado, un archivo .ibd, correspondiente a una base de datos MySQL comunmente utilizada para almacenar datos estructurados. 
-Decidí ver lo que habia dentro del archivo por lo que, primero tuve que confirmar su ubicación:
+
+Decidí por ver lo que habia dentro del archivo, por lo que, primero tuve que confirmar su ubicación:
 ```
 Get-ChildItem "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output" ` -Recurse -File -Filter "bk_db.ibd" | Select-Object FullName
 ```
@@ -91,9 +92,19 @@ strings.exe "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\
 
 EL archivo contiene usuarios y contraseñas.
 
-Respuesta: - `bk_db.ibd`
+Respuesta:  `bk_db.ibd`
 
 ---
 
+## How many user credentials were found in the file?
 
+Para determinar cuántas credenciales estaban almacenadas en el archivo, se extrajeron cadenas legibles utilizando strings.exe y se filtraron direcciones de correo electrónico:
+```
+strings.exe "C:\Users\limitles\Desktop\jinkies\Jinkies_KAPE_output\TriageData\C\users\Velma\Documents\Python Scripts + things\web server project\testing\logon website\bk\bk_db.ibd" | Select-String "@" | Measure-Object
+```
 
+<img width="1720" height="156" alt="image" src="https://github.com/user-attachments/assets/2fd3f2ba-48ec-44e3-bc2d-c841bf993684" />
+
+Respuesta: `216`
+
+---
