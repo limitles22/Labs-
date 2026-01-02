@@ -22,8 +22,6 @@ A través de este análisis forense, reconstruiremos la línea de tiempo desde l
 
 - RBCmd: Análisis de archivos en la papelera de reciclaje ($Recycle.Bin).
 
-- 010 Editor: Inspección hexadecimal de archivos.
-
 ---
 
 ## Case Questions & Analysis
