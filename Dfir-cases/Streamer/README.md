@@ -77,6 +77,7 @@ Asimismo, el timeline indica que el archivo fue movido al siguiente directorio d
 Respuesta: - `C:\Users\Simon.stark\Documents\Streaming Software\Obs Streaming Software.zip`
 
 
+##
 ### What's the timestamp when the file was renamed?
 
 A partir del mismo evento de renombrado identificado en el $UsnJrnl:$J, se obtuvo el timestamp exacto del cambio de nombre.
@@ -99,6 +100,7 @@ Además, este stream preserva la URL de descarga original, permitiendo responder
 Respuesta: - `http://obsproicet.net/download/v28_23/OBS-Studio-28.1.2-Full-Installer-x64.zip`
 
 
+##
 ### Dig down deeper and find the IP Address on which the malicious domain was being hosted.
 
 Para identificar la dirección IP asociada al dominio malicioso, se analizaron los Event Logs de Windows utilizando EvtxECmd:
@@ -118,6 +120,7 @@ Como se observa en la imagen, el evento muestra la dirección IP resuelta para e
 Respuesta: - `13.232.96.186`
 
 
+##
 ### Multiple Source ports connected to communicate and download the malicious file from the malicious website. Answer the highest source port number from which the machine connected to the malicious website.
 
 Para identificar el puerto de origen más alto utilizado por el host, se analizaron los logs del Firewall de Windows provistos en el reto, específicamente el archivo de texto `pfirewall`.
@@ -131,6 +134,7 @@ Filtré por la ip obtenida de la pregunta anterior y fui recorriendo el archivo 
 Respuesta: - `50045`
 
 
+##
 ### The zip file had a malicious setup file in it which would install a piece of malware and a legit instance of OBS studio software so the user has no idea they got compromised. Find the hash of the setup file.
 
 Para identificar el archivo ejecutable malicioso contenido dentro del ZIP descargado por el usuario, se analizó el artefacto AMCache, el cual registra información sobre ejecutables y componentes de instalación que han sido ejecutados o instalados en el sistema.
@@ -148,6 +152,7 @@ Filtrando con OBS, se identificó el ejecutable malicioso y su hash SHA1.
 Respuesta: - `35e3582a9ed14f8a4bb81fd6aca3f0009c78a3a1`
 
 
+##
 ### The malicious software automatically installed a backdoor on the victim's workstation. What's the name and filepath of the backdoor?
 
 El malware instaló un backdoor adicional como parte del compromiso. Para identificarlo, se revisaron los CSV generados por Amcache, correlacionando por timestamp con la ejecución del instalador original.
@@ -159,6 +164,7 @@ El análisis reveló el siguiente ejecutable malicioso.
 Respuesta: - `C:\Users\Simon.stark\Miloyeki ker konoyogi\lat takewode libigax weloj jihi quimodo datex dob cijoyi mawiropo.exe`
 
 
+##
 ### Find the prefetch hash of the backdoor.
 
 Se localizó el archivo Prefetch (.pf) correspondiente al backdoor y se analizó utilizando PECmd.
@@ -174,6 +180,7 @@ Podemos ver el hash en la imagen.
 Respuesta: - `D8A6D943`
 
 
+##
 ### The backdoor is also used as a persistence mechanism in a stealthy manner to blend in the environment. What's the name used for persistence mechanism to make it look legit?
 
 Para identificar el mecanismo de persistencia, se analizaron los Event Logs de Windows, filtrando por Event ID 4698, el cual indica la creación de tareas programadas.
@@ -185,6 +192,7 @@ El backdoor creó una tarea con un nombre que simula un componente legítimo del
 Respuesta: - `COMSurrogate`
 
 
+##
 ### What's the bogus/invalid randomly named domain which the malware tried to reach?
 
 Utilizando nuevamente los logs DNS (Event ID 3008) y correlacionando la hora en la que se ejecutó el malware, se identificó un dominio con nombre aleatorio.
@@ -196,6 +204,7 @@ Utilizando nuevamente los logs DNS (Event ID 3008) y correlacionando la hora en 
 Respuesta: - `oaueeewy3pdy31g3kpqorpc4e.qopgwwytep`
 
 
+##
 ### The malware tried exfiltrating the data to a s3 bucket. What's the url of s3 bucket?
 
 En los mismos eventos DNS, se identificaron resoluciones relacionadas con servicios de Amazon S3 filtrando por la palabra clave 'S3' en la columna Payload.
@@ -207,6 +216,7 @@ En los mismos eventos DNS, se identificaron resoluciones relacionadas con servic
 Respuesta: - `http://bbuseruploads.s3.amazonaws.com`
 
 
+##
 ### What topic was simon going to stream about in week 1? Find a note or something similar and recover its content to answer the question.
 
 Para responder esta pregunta, se analizaron archivos .txt dentro del perfil del usuario utilizando el $MFT.
@@ -225,6 +235,7 @@ MFTECmd.exe -f 'C:\Users\limitles\Desktop\Streamer\Streamer\Acquisition\C\$MFT' 
 Respuesta: - ` Filesystem Security`
 
 
+##
 ### What's the name of Security Analyst who triaged the infected workstation?
 
 Para identificar al analista, se analizaron los ShellBags del usuario Simon Stark utilizando SBECmd, los cuales registran rutas accedidas desde el Explorador de Windows.
@@ -241,6 +252,7 @@ El análisis reveló acceso a herramientas forenses alojadas en un recurso compa
 Respuesta: - `CyberJunkie`
 
 
+##
 ### What's the network path from where acquisition tools were run?
 
 A partir del mismo análisis de ShellBags, se identificó la ruta completa desde donde se ejecutaron las herramientas de adquisición.
