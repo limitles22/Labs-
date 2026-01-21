@@ -87,6 +87,7 @@ A partir del mismo evento de renombrado identificado en el $UsnJrnl:$J, se obtuv
 Respuesta: - `2023-05-05 10:22:23`
 
 
+##
 ### What's the Full URL from where the software was downloaded?
 
 Dentro del $MFT se identificó un Alternate Data Stream (ADS) llamado Zone.Identifier, asociado al archivo ZIP descargado.
