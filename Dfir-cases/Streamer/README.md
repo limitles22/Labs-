@@ -33,9 +33,9 @@ Para identificar el archivo ZIP descargado, se analizó el artefacto $MFT, el cu
 
 Se utilizó la herramienta MFTECmd para convertir el $MFT a formato CSV:
 
-´´´
+```
 MFTECmd.exe -f 'C:\Users\limitles\Desktop\Streamer\Streamer\Acquisition\C\$MFT' --csv C:\output
-´´´
+```
 
 Una vez generado el CSV, se filtraron los resultados por la extensión .zip. Entre los artefactos encontrados, se observó una ruta asociada al usuario Simon.Stark, confirmando que el análisis se realizaba en el contexto correcto.
 
@@ -47,9 +47,9 @@ Con el objetivo de identificar el cambio de nombre del archivo, repetí el anál
 
 Ejecuté el siguiente comando:
 
-´´´
+```
 MFTECmd.exe -f 'C:\Users\limitles\Desktop\Streamer\Streamer\Acquisition\C\$Extend\$J' --csv c:\output
-´´´
+```
 
 Luego, filtré los resultados por los términos “.zip” y “Obs”. En este caso, el $J muestra claramente los eventos de renombrado (RenameOldName / RenameNewName), permitiendo identificar el nombre original del archivo descargado antes de ser modificado por el usuario.
 
