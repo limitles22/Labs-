@@ -95,7 +95,7 @@ Además, este stream preserva la URL de descarga original, permitiendo responder
 
 <img width="1919" height="743" alt="image" src="https://github.com/user-attachments/assets/bba0204f-e1f6-4930-9c4f-4c4dbc7f1f3c" />
 
-Respuesta: - `[http://obsproicet.net/download/v28_23/OBS-Studio-28.1.2-Full-Installer-x64.zip](http://obsproicet.net/download/v28_23/OBS-Studio-28.1.2-Full-Installer-x64.zip)`
+Respuesta: - `http://obsproicet.net/download/v28_23/OBS-Studio-28.1.2-Full-Installer-x64.zip`
 
 
 ### Dig down deeper and find the IP Address on which the malicious domain was being hosted.
