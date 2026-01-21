@@ -57,6 +57,7 @@ Gracias a esta correlación, se puede confirmar el archivo original descargado.
 Respuesta: - `OBS-Studio-28.1.2-Full-Installer-x64.zip`
 
 
+##
 ### Simon Stark renamed the downloaded zip file. What's the renamed name and full path?
 
 Para responder a esta pregunta, utilicé el timeline generado a partir del $MFT y del $UsnJrnl ($J), analizado previamente. En dicho timeline se observan eventos de RenameOldName y RenameNewName, lo que permite identificar con claridad el cambio de nombre del archivo descargado.
