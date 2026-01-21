@@ -15,17 +15,14 @@ A través de este análisis forense, se reconstruye la cadena completa de infecc
 - SBECmd – Análisis de ShellBags desde NTUSER.DAT
 - TimelineExplorer – Visualización y correlación temporal de artefactos CSV
 
----
 
 ## Context
 
 Simon Stark es desarrollador en Forela y recientemente planeó transmitir algunas sesiones de programación con sus colegas, lo que le valió el reconocimiento del director general y otros compañeros. Sin saberlo, instaló un conocido software de transmisión que encontró mediante una búsqueda en Google y que era una de las URL más promocionadas por los anuncios de Google. Desafortunadamente, las cosas tomaron un giro inesperado y se produjo un incidente de seguridad. Analice los artefactos clasificados que se le proporcionan para averiguar qué sucedió exactamente.
 
----
 
 ## Case Question & Analysis
 
----
 
 ## What was the original ZIP file downloaded by Simon Stark?
 
@@ -59,6 +56,5 @@ Gracias a esta correlación, se puede confirmar el archivo original descargado.
 
 Respuesta: - ´OBS-Studio-28.1.2-Full-Installer-x64.zip´
 
----
 
 
