@@ -24,7 +24,7 @@ Simon Stark es desarrollador en Forela y recientemente planeó transmitir alguna
 ## Case Question & Analysis
 
 
-## What was the original ZIP file downloaded by Simon Stark?
+### What was the original ZIP file downloaded by Simon Stark?
 
 Para identificar el archivo ZIP descargado, se analizó el artefacto $MFT, el cual contiene metadatos de todos los archivos creados y modificados en el sistema.
 
