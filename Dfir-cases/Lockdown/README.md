@@ -17,7 +17,7 @@ consistente con el comportamiento conocido de esta familia de malware (AgentTesl
 
 # Tools Used
 
-| --- | --- |
+|---|---|
 
 | **Wireshark**     | Análisis de tráfico de red | 
 
