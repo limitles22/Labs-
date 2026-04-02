@@ -17,6 +17,8 @@ consistente con el comportamiento conocido de esta familia de malware (AgentTesl
 
 # Tools Used
 
+| --- | --- |
+
 | **Wireshark**     | Análisis de tráfico de red | 
 
 | **Volatility 3**  | Análisis de volcado de memoria |
