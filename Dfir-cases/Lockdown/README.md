@@ -48,7 +48,7 @@ El atacante identificó el puerto 445 (SMB) abierto en el host víctima y realiz
 ```
 smb2.cmd == 3
 ```
-![](screenshots/dos.png)
+![](screenshots/smb23.png)
 
 Mediante este filtro en Wireshark se identificaron dos Tree Connect Requests hacia los siguientes shares:
 
