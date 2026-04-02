@@ -172,3 +172,7 @@ El hash SHA256 fue buscado en VirusTotal y Google, asociando la muestra a la fam
 | MD5 | `E762B3D003D44B1E813532D897AF84AB` | Hash de updatenow.exe |
 
 
+## Conclusion
+
+Un atacante realizó un reconocimiento activo sobre el servidor IIS, identificando el puerto 445 (SMB) abierto. Aprovechando una mala configuración de seguridad, accedió al share `Documents` sin credenciales válidas, exploró su contenido y subió una webshell (`shell.aspx`). Al ejecutarla vía HTTP, estableció un reverse shell hacia su equipo en el puerto 4443, obteniendo acceso remoto al servidor. Desde ese acceso, dropeó `updatenow.exe` en la carpeta Startup de Windows para garantizar persistencia entre reinicios. El análisis estático e OSINT del binario lo asoció con la familia **AgentTesla** — un infostealer con capacidades de robo de credenciales, keylogging y comunicación con C2 — siendo `cp8nl.hyperhost.ua` el dominio identificado como servidor de comando y control.
+
