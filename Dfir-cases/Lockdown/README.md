@@ -33,7 +33,7 @@ consistente con el comportamiento conocido de esta familia de malware (AgentTesl
 
 Se identificó un escaneo de puertos hacia el host víctima (10.0.2.15) originado desde 10.0.2.4. El patrón fue detectado en Wireshark → Statistics → Conversations → TCP, donde se observa que desde el puerto 55475 del atacante se enviaron exactamente 2 paquetes hacia múltiples puertos distintos de la víctima — comportamiento característico de un SYN scan (Nmap).
 
-!(screenshots/uno.png)
+![](screenshots/uno.png)
 
 **Herramienta:** Wireshark  
 
