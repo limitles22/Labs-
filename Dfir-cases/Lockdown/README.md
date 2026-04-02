@@ -48,6 +48,7 @@ El atacante identificó el puerto 445 (SMB) abierto en el host víctima y realiz
 ```
 smb2.cmd == 3
 ```
+![](screenshots/dos.png)
 
 Mediante este filtro en Wireshark se identificaron dos Tree Connect Requests hacia los siguientes shares:
 
@@ -70,6 +71,7 @@ Luego abrió `information.txt`, consultó su metadata (`FILE_ALL_INFO`) y leyó 
 ```
 smb2
 ```
+![](screenshots/tres.png)
 
 Con esa información, el atacante procedió a subir `shell.aspx` al share mediante un **SMB2 Write Request** de **1015024 bytes**, aprovechando que el share era web-accessible a través de IIS.
 
@@ -96,6 +98,8 @@ Inmediatamente después de la ejecución, se estableció una conexión TCP de re
 ip.addr == 10.0.2.4 and !http and !smb2
 ```
 
+![](screenshots/cuatro.png)
+
 **Herramienta:** Wireshark 
 
 **MITRE:** T1059 — Command and Scripting Interpreter / T1071 — Application Layer Protocol
@@ -105,9 +109,11 @@ ip.addr == 10.0.2.4 and !http and !smb2
 
 Desde la webshell, el atacante dropeó y ejecutó un binario malicioso para establecer persistencia en el sistema. Para identificarlo, analicé el árbol de procesos en el volcado de memoria con Volatility 3:
 
-```bash
+```
 python.exe .\vol.py -f 'C:\Users\limitles\Desktop\lockdown\memdump.mem' windows.pstree
 ```
+
+![](screenshots/cinco.png)
 
 Se identificó que `w3wp.exe` (PID 4332) tenía un proceso hijo inusual — `updatenow.exe` (PID 900) — ejecutándose desde la carpeta Startup de Windows, lo que confirma que fue dropeado y lanzado directamente por la webshell.
 
@@ -128,6 +134,8 @@ El ejecutable `updatenow.exe` fue analizado estáticamente con PEStudio, revelan
 
 **Análisis estático — PEStudio**
 
+![](screenshots/seis.png)
+
 | Indicador | Detalle |
 |---|---|
 | SHA256 | `C25A6673A24D169DE1BB399D226C12CDC666E0FA534149FC9FA7896EE61D406F` |
@@ -143,6 +151,10 @@ Las librerías importadas — `WSOCK32.dll`, `WININET.dll`, `IPHLPAPI.dll` — s
 **Investigación OSINT**
 
 El hash SHA256 fue buscado en VirusTotal y Google, asociando la muestra a la familia **AgentTesla** — un infostealer/RAT conocido con capacidades de keylogging, robo de credenciales y exfiltración de datos.
+
+![](screenshots/site.png)
+
+![](screenshots/ocho.png)
 
 | Fuente | Hallazgo |
 |---|---|
