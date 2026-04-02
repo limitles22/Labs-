@@ -18,7 +18,6 @@ consistente con el comportamiento conocido de esta familia de malware (AgentTesl
 # Tools Used
 
 | Herramienta | Propósito |
-|---|---|
 
 | **Wireshark**     | Análisis de tráfico de red | 
 
@@ -29,5 +28,6 @@ consistente con el comportamiento conocido de esta familia de malware (AgentTesl
 | **Virus Total** | Investigación OSINT |
 
 | **MalwareBazaar** | Investigación OSINT | 
+|---|---|
 
 ---
