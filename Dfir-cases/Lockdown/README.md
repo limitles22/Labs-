@@ -71,7 +71,7 @@ Luego abrió `information.txt`, consultó su metadata (`FILE_ALL_INFO`) y leyó 
 ```
 smb2
 ```
-![](screenshots/tres.png)
+![](screenshots/dos.png)
 
 Con esa información, el atacante procedió a subir `shell.aspx` al share mediante un **SMB2 Write Request** de **1015024 bytes**, aprovechando que el share era web-accessible a través de IIS.
 
@@ -90,6 +90,8 @@ Una vez completado el reconocimiento, el atacante ejecutó la webshell accediend
 GET /Documents/shell.aspx HTTP/1.1
 ```
 
+![](screenshots/tres.png)
+
 Esto fue identificado en Wireshark filtrando por tráfico HTTP y localizando el request al path `/Documents/shell.aspx` (paquete 3573, timestamp `02:49:39`).
 
 Inmediatamente después de la ejecución, se estableció una conexión TCP de reverse shell desde la víctima hacia el atacante en el puerto **4443**, identificada con el filtro:
@@ -98,7 +100,7 @@ Inmediatamente después de la ejecución, se estableció una conexión TCP de re
 ip.addr == 10.0.2.4 and !http and !smb2
 ```
 
-![](screenshots/cuatro.png)
+![](screenshots/cinco.png)
 
 **Herramienta:** Wireshark 
 
@@ -113,7 +115,7 @@ Desde la webshell, el atacante dropeó y ejecutó un binario malicioso para esta
 python.exe .\vol.py -f 'C:\Users\limitles\Desktop\lockdown\memdump.mem' windows.pstree
 ```
 
-![](screenshots/cinco.png)
+![](screenshots/seis.png)
 
 Se identificó que `w3wp.exe` (PID 4332) tenía un proceso hijo inusual — `updatenow.exe` (PID 900) — ejecutándose desde la carpeta Startup de Windows, lo que confirma que fue dropeado y lanzado directamente por la webshell.
 
@@ -134,7 +136,7 @@ El ejecutable `updatenow.exe` fue analizado estáticamente con PEStudio, revelan
 
 **Análisis estático — PEStudio**
 
-![](screenshots/seis.png)
+![](screenshots/site.png)
 
 | Indicador | Detalle |
 |---|---|
@@ -152,9 +154,9 @@ Las librerías importadas — `WSOCK32.dll`, `WININET.dll`, `IPHLPAPI.dll` — s
 
 El hash SHA256 fue buscado en VirusTotal y Google, asociando la muestra a la familia **AgentTesla** — un infostealer/RAT conocido con capacidades de keylogging, robo de credenciales y exfiltración de datos.
 
-![](screenshots/site.png)
-
 ![](screenshots/ocho.png)
+
+![](screenshots/nueve.png)
 
 | Fuente | Hallazgo |
 |---|---|
