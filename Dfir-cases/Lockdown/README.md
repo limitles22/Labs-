@@ -99,10 +99,7 @@ ip.addr == 10.0.2.4 and !http and !smb2
 **MITRE:** T1059 — Command and Scripting Interpreter / T1071 — Application Layer Protocol
 
 
-Perfecto. Pasalo en limpio para el writeup:
-
-
-### Persistence
+## Persistence
 
 Desde la webshell, el atacante dropeó y ejecutó un binario malicioso para establecer persistencia en el sistema. Para identificarlo, analicé el árbol de procesos en el volcado de memoria con Volatility 3:
 
@@ -121,6 +118,38 @@ Al ubicarse en la carpeta Startup, el ejecutable se lanzará automáticamente ca
 **Herramienta:** Volatility 3  
 
 **MITRE:** T1547.001 — Boot or Logon Autostart Execution: Startup Folder
+
+
+## Malware Analysis & Threat Intelligence
+
+El ejecutable `updatenow.exe` fue analizado estáticamente con PEStudio, revelando múltiples indicadores de malicia.
+
+**Análisis estático — PEStudio**
+
+| Indicador | Detalle |
+|---|---|
+| SHA256 | `C25A6673A24D169DE1BB399D226C12CDC666E0FA534149FC9FA7896EE61D406F` |
+| MD5 | `E762B3D003D44B1E813532D897AF84AB` |
+| Tamaño | 602112 bytes |
+| Entropía | 7.932 (alta — indica compresión o cifrado) |
+| Packer | UPX v0.8X — secciones `UPX0` y `UPX1` detectadas |
+| Compilador | AutoIt (Fri Aug 30 2024) |
+| Tipo | Ejecutable 32-bit, GUI |
+
+Las librerías importadas — `WSOCK32.dll`, `WININET.dll`, `IPHLPAPI.dll` — sugieren capacidades de red, comunicación HTTP y manipulación de interfaces de red.
+
+**Investigación OSINT**
+
+El hash SHA256 fue buscado en VirusTotal y Google, asociando la muestra a la familia **AgentTesla** — un infostealer/RAT conocido con capacidades de keylogging, robo de credenciales y exfiltración de datos.
+
+| Fuente | Hallazgo |
+|---|---|
+| VirusTotal | 3/94 detecciones para dominio C2 `cp8nl.hyperhost.ua` |
+| MalwareBazaar | Familia: AgentTesla — `SecuriteInfo.com.Trojan.AutoIt.1343` |
+
+**Herramientas:** PEStudio, VirusTotal, MalwareBazaar, Google  
+
+**MITRE:** T1027 — Obfuscated Files or Information (UPX packing)
 
 
 
