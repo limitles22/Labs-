@@ -168,12 +168,7 @@ El hash SHA256 fue buscado en VirusTotal y Google, asociando la muestra a la fam
 
 | Tipo | Valor | Descripción |
 |---|---|---|
-| IP | `10.0.2.4` | IP del atacante |
-| IP | `10.0.2.15` | IP de la víctima (servidor IIS) |
 | SHA256 | `C25A6673A24D169DE1BB399D226C12CDC666E0FA534149FC9FA7896EE61D406F` | Hash de updatenow.exe |
 | MD5 | `E762B3D003D44B1E813532D897AF84AB` | Hash de updatenow.exe |
-| Archivo | `shell.aspx` | Webshell subida vía SMB al share Documents |
-| Ruta | `C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\updatenow.exe` | Ejecutable malicioso con persistencia |
-| Puerto | `4443` | Puerto del reverse shell |
-| Dominio | `cp8nl.hyperhost.ua` | Dominio C2 asociado a AgentTesla |
-| Familia | `AgentTesla` | Familia de malware identificada via OSINT |
+
+
