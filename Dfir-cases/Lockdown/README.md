@@ -33,10 +33,13 @@ consistente con el comportamiento conocido de esta familia de malware (AgentTesl
 
 Se identificó un escaneo de puertos hacia el host víctima (10.0.2.15) originado desde 10.0.2.4. El patrón fue detectado en Wireshark → Statistics → Conversations → TCP, donde se observa que desde el puerto 55475 del atacante se enviaron exactamente 2 paquetes hacia múltiples puertos distintos de la víctima — comportamiento característico de un SYN scan (Nmap).
 
+**Herramienta:** Wireshark  
+
 **MITRE: T1046 — Network Service Discovery**
 
 
-### Initial Access
+
+## Initial Access
 
 El atacante identificó el puerto 445 (SMB) abierto en el host víctima y realizó una enumeración de recursos compartidos para determinar cuáles estaban disponibles.
 
@@ -52,5 +55,6 @@ Mediante este filtro en Wireshark se identificaron dos Tree Connect Requests hac
 | `\\10.0.2.15\Documents` | Share de archivos expuesto por IIS, con permisos de escritura que permitieron al atacante subir contenido malicioso. |
 
 **Herramienta:** Wireshark  
+
 **MITRE:** T1135 — Network Share Discovery
 
