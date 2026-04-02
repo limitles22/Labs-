@@ -122,7 +122,7 @@ Al ubicarse en la carpeta Startup, el ejecutable se lanzará automáticamente ca
 
 ## Malware Analysis & Threat Intelligence
 
-El ejecutable `updatenow.exe` fue analizado estáticamente con PEStudio, revelando múltiples indicadores de malicia.
+El ejecutable `updatenow.exe` fue analizado estáticamente con PEStudio, revelando múltiples indicadores.
 
 **Análisis estático — PEStudio**
 
@@ -150,6 +150,18 @@ El hash SHA256 fue buscado en VirusTotal y Google, asociando la muestra a la fam
 **Herramientas:** PEStudio, VirusTotal, MalwareBazaar, Google  
 
 **MITRE:** T1027 — Obfuscated Files or Information (UPX packing)
+
+## MITRE ATT&CK Mapping
+
+| ID | Técnica |
+|---|---|
+|T1046 |Network Service Discovery (Reconnaissance)|
+| T1135 | Network Share Discovery (Discovery)|
+| T1505.003 | Web Shell (Initial Access)|
+| T1059 | Command and Scripting Interpreter (Execution)|
+| T1071 | Application Layer Protocol (Execution)|
+| T1547.001 | Startup Folder (Persistence)|
+| T1027 | Obfuscated Files or Information (Malware)|
 
 
 
