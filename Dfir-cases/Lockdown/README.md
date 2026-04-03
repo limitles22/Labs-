@@ -1,9 +1,9 @@
 # Lockdown — DFIR Analysis
 
-Plataforma: CyberDefenders / HTB Sherlock
-Categoría: Endpoint Forensics / Network Forensics / Malware Analysis / Threat Intel
-Dificultad: Easy 
-Fecha: 2025-04-01
+**Plataforma:** CyberDefenders 
+**Categoría:** Network Forensics 
+**Dificultad:** Easy 
+**Fecha:** 2025-04-01
 
 ---
 
@@ -80,7 +80,7 @@ Con esa información, el atacante procedió a subir `shell.aspx` al share median
 **MITRE:** T1505.003 — Server Software Component: Web Shell
 
 
-### Execution
+## Execution
 
 Previo a la ejecución de la webshell, el atacante realizó una enumeración web automatizada sobre el servidor IIS mediante requests HTTP — `GET /robots.txt`, `GET /.git/HEAD`, `PROPFIND`, `OPTIONS` — probablemente con una herramienta de scanning como Nmap o un scanner web. El servidor respondió con códigos `404 Not Found` y `405 Method Not Allowed` en la mayoría de los casos.
 
