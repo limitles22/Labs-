@@ -1,8 +1,11 @@
 # Lockdown — DFIR Analysis
 
 **Plataforma:** CyberDefenders 
+
 **Categoría:** Network Forensics 
+
 **Dificultad:** Easy 
+
 **Fecha:** 2025-04-01
 
 ---
