@@ -199,14 +199,23 @@ index="kerberoasted" winlog.event_id IN (19, 20, 21) "winlog.event_data.Name"= \
 
 <img width="1552" height="541" alt="image" src="https://github.com/user-attachments/assets/08e8b19b-e749-4773-ba81-2766128728a9" />
 
-La query del Filter "Updater" es:
-
 El Consumer se activa ante cada Event ID 4625 (failed logon) que mencione johndoe, mecanismo de detección de análisis forense que ejecuta una acción maliciosa si alguien intenta autenticarse como johndoe y falla.
 
 Respuesta: **Win32_NTLogEvent**
 
+---
 
+# MITRE ATT&CK Mapping
 
+| ID | Técnica | Detalle |
+|---|---|---|
+| T1558.003 | Steal or Forge Kerberos Tickets: Kerberoasting | johndoe solicitó TGS con RC4 para SQLService y FileShareService |
+| T1078 | Valid Accounts | Uso de credenciales crackeadas de SQLService para acceder al DC |
+| T1569.002 | System Services: Service Execution | Instalación del servicio malicioso `iOOEDsXjWeGRAyGl` con payload PowerShell ofuscado, consistente con un stager Meterpreter |
+| T1021.001 | Remote Services: Remote Desktop Protocol | Habilitación de RDP y acceso interactivo al DC |
+| T1112 | Modify Registry | Modificación de `fDenyTSConnections` para habilitar RDP |
+| T1546.003 | Event Triggered Execution: WMI Event Subscription | Persistencia mediante suscripción WMI `Updater` |
+| T1027 | Obfuscated Files or Information | Payload PowerShell ofuscado con Base64 + GzipStream en el servicio malicioso |
 
 
 
