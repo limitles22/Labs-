@@ -40,7 +40,9 @@ index="kerberoasted" "winlog.event_id"=476
 
 
 Hallazgo: Los 163 eventos de Event ID 4769 usan exclusivamente 0x17 (RC4-HMAC). En un entorno sano se esperaría una mezcla con AES (0x12/0x11). Ver únicamente RC4 indica que el entorno no tiene AES configurado, maximizando la superficie de ataque para Kerberoasting. RC4 permite que un atacante crackee offline el hash del ticket solicitado con herramientas como Hashcat o John the Ripper.
-Respuesta: RC4-HMAC (0x17)
+
+Respuesta: **RC4-HMAC (0x17)**
+
 
 ---
 
@@ -65,7 +67,7 @@ index="kerberoasted" "winlog.event_id"=4769
 
 Hallazgo: johndoe@CYBERCACTUS.LOCAL solicitó TGS para SQLService y FileShareService con apenas milisegundos de diferencia (07:37:34.716 y 07:37:34.740). Este patrón de solicitudes simultáneas a múltiples SPNs es inconsistente con uso legítimo normal y es indicativo de enumeración automatizada de service accounts.
 
-Respuesta: johndoe
+Respuesta: **johndoe**
 
 ---
 
