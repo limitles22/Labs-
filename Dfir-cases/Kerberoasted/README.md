@@ -14,7 +14,7 @@
 
 En este laboratorio se investigó una hipótesis de ataque Kerberoasting activo contra el dominio CYBERCACTUS.LOCAL. 
 El análisis de logs del Domain Controller combinado con telemetría Sysmon permitió reconstruir la cadena completa del ataque desde el acceso inicial hasta el establecimiento de persistencia.
-La investigación confirmó que el usuario johndoe ejecutó un ataque Kerberoasting exitoso desde 10.0.0.154, solicitando tickets de servicio con cifrado RC4-HMAC (0x17) para dos SPNs — SQLService y FileShareService. 
+La investigación confirmó que el usuario johndoe ejecutó un ataque Kerberoasting exitoso desde 10.0.0.154, solicitando tickets de servicio con cifrado RC4-HMAC (0x17) para dos SPNs, SQLService y FileShareService. 
 El hash de SQLService fue crackeado en aproximadamente 11 minutos, tras lo cual el atacante utilizó las credenciales comprometidas para acceder al DC, instalar un servicio, habilitar RDP y establecer persistencia mediante una suscripción WMI denominada Updater.
 El ataque abarcó un período de aproximadamente 21 minutos (07:37 — 07:58 UTC) y comprometió completamente el Domain Controller DC01.cybercactus.local, el activo más crítico del dominio.
 
