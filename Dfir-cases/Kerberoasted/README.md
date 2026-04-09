@@ -6,7 +6,7 @@
 
 **Dificultad:** Medium
 
-**Fecha:** 2025-04-08
+**Fecha:** 2026-04-08
 
 ---
 
@@ -30,7 +30,7 @@ Este evento registra cada solicitud de TGS e incluye el campo TicketEncryptionTy
 
 Query:
 ```
-index="kerberoasted" "winlog.event_id"=476
+index="kerberoasted" "winlog.event_id"=4769
 | stats count by winlog.event_data.TicketEncryptionType
 ```
 
