@@ -94,7 +94,7 @@ Respuesta: **SQLService**
 
 Q4 — To track the attacker's entry point, we need to identify the machine initially compromised by the attacker. What is the machine's IP address?
 
-johndoe es la cuenta que ejecutó el Kerberoasting. Toda su actividad en los logs debería provenir de una única IP — la máquina comprometida.
+johndoe es la cuenta que ejecutó el Kerberoasting. Toda su actividad en los logs debería provenir de una única IP, la máquina comprometida.
 
 Query:
 ```
@@ -177,7 +177,7 @@ index="kerberoasted" winlog.event_id IN (19, 20, 21)
 | table _time, winlog.event_id, winlog.event_data.Name, winlog.event_data.Consumer, winlog.event_data.Filter
 ```
 
-<img width="1896" height="841" alt="image" src="https://github.com/user-attachments/assets/b2792225-862b-4988-b2e0-1e5c7e34bab1" />
+<img width="1068" height="520" alt="image" src="https://github.com/user-attachments/assets/84683c01-f318-4df3-aa39-b301af20bdd8" />
 
 A las 07:58:06, 10 minutos después del primer login RDP, se registraron dos eventos con nombre Updater: Event ID 20 (Consumer) y Event ID 19 (Filter).
 El nombre genérico es una técnica de camuflaje común. Al vivir en la base de datos WMI sin archivos en disco, esta técnica evade detección por antivirus tradicionales.
