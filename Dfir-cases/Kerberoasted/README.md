@@ -217,6 +217,17 @@ Respuesta: **Win32_NTLogEvent**
 | T1546.003 | Event Triggered Execution: WMI Event Subscription | Persistencia mediante suscripción WMI `Updater` |
 | T1027 | Obfuscated Files or Information | Payload PowerShell ofuscado con Base64 + GzipStream en el servicio malicioso |
 
+---
 
+# Conclusion
+
+El análisis confirmó un ataque Kerberoasting exitoso contra el dominio CYBERCACTUS.LOCAL. 
+El usuario `johndoe` solicitó tickets de servicio con cifrado RC4-HMAC (0x17) para `SQLService` y `FileShareService` desde `10.0.0.154`. 
+El hash de `SQLService` fue crackeado en aproximadamente 11 minutos, tras lo cual el atacante utilizó las credenciales comprometidas para acceder al DC, 
+instalar un servicio malicioso con payload PowerShell ofuscado, habilitar RDP y establecer persistencia mediante una suscripción WMI denominada `Updater`.
+
+La raíz del problema fue la configuración de cifrado RC4 en las service accounts del dominio, 
+que permitió el crackeo offline de credenciales. La mitigación principal es migrar a cifrado AES 
+y aplicar contraseñas robustas en todas las service accounts.
 
 
