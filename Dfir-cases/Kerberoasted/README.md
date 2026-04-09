@@ -204,6 +204,19 @@ Respuesta: **Win32_NTLogEvent**
 
 ---
 
+# Attack Timeline
+
+| Tiempo (UTC) | Evento |
+|---|---|
+| 2023-10-16 07:37:30 | johndoe solicita TGS para SQLService y FileShareService con RC4 (Kerberoasting) |
+| 2023-10-16 07:48:07 | Primer logon exitoso de SQLService (Event ID 4624) |
+| 2023-10-16 07:48:10 | Servicio malicioso `iOOEDsXjWeGRAyGl` instalado en DC01 (Event ID 7045) |
+| 2023-10-16 07:48:38 | RDP habilitado vía modificación de registro (Sysmon Event ID 13) |
+| 2023-10-16 07:50:29 | Primer login RDP al DC (Event ID 4624, Logon Type 10) |
+| 2023-10-16 07:58:06 | Suscripción WMI `Updater` registrada para persistencia (Sysmon Event ID 19/20) |
+
+---
+
 # MITRE ATT&CK Mapping
 
 | ID | Técnica | Detalle |
