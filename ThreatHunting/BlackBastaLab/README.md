@@ -24,7 +24,7 @@ El ataque abarcó un período de aproximadamente 1 hora y 44 minutos (15:08 — 
 
 # Analysis
 
-## Q1 — What was the full URL used to download the malicious ZIP file?
+## Q1 — An employee downloaded a ZIP archive containing a malicious Excel file. What was the full URL used to download this file?
 
 El evento Sysmon Event ID 15 (FileCreateStreamHash) registra el Alternate Data Stream `:Zone.Identifier` que Windows escribe cuando un archivo se descarga desde internet. El campo `Contents` contiene el `ZoneId=3` (origen: internet) y el `HostUrl` de donde provino el archivo.
 
@@ -43,7 +43,7 @@ ZoneId=3 confirma descarga desde internet. El campo HostUrl contiene la URL exac
 
 ---
 
-## Q2 — What is the SHA256 hash of the malicious Excel file?
+## Q2 — After extracting the ZIP archive, the employee opened an Excel file that triggered the execution of malicious Macro. What is the SHA256 of this Excel file?
 
 Combinamos dos filtros clave en EID 15: `Image=*EXCEL.exe` (el stream fue creado en contexto de Excel) y `file_name=*.xlsm` (extensión que indica Excel con macros habilitadas). EID 15 incluye el campo SHA256 del archivo al momento de creación del ADS.
 
@@ -61,7 +61,7 @@ La extensión `.xlsm` es un indicador importante — a diferencia de `.xlsx`, lo
 
 ---
 
-## Q3 — What is the name of the file created after the Excel document was opened?
+## Q3 — Following the execution of the malicious Excel file, an additional file was created to continue the attack. What is the name of this file?
 
 El macro de Excel se ejecutó bajo el usuario `knixon`. Los macros maliciosos típicamente invocan PowerShell para dropear el siguiente stage. Filtramos por EID 11 (File Create) con PowerShell como proceso responsable y el usuario comprometido.
 
@@ -95,7 +95,7 @@ index=* EventID=11 user=knixon Image="C:\\Windows\\System32\\WindowsPowerShell\\
 
 ---
 
-## Q5 — What is the name of the DLL deployed during the early execution stage?
+## Q5 — During the early execution stage, a DLL was deployed as part of the attack chain. What is the name of this DLL?
 
 En los resultados de Q3 se observó actividad de `regsvr32.exe` creando archivos. `regsvr32.exe` es un binario legítimo de Windows cuya función es registrar y cargar DLLs — los atacantes lo abusan porque es un proceso firmado y confiable que permite cargar DLLs maliciosas evadiendo controles (MITRE T1218.010 - Regsvr32). Buscamos EID 7 (Image Load) para ver qué DLL cargó regsvr32.
 
@@ -133,7 +133,7 @@ Este PID (8592) corresponde al `regsvr32.exe` malicioso. Se utiliza como pivote 
 
 ---
 
-## Q7 — What was the name of the scheduled task created for persistence?
+## Q7 — To maintain persistence, the attacker created a scheduled task that executes at system logon. What was the name of the scheduled task?
 
 El EID 4698 (Scheduled Task Created) no estaba disponible en los logs, probablemente por configuración de auditoría limitada. Usando el contexto acumulado (PID 8592 = regsvr32 malicioso), buscamos procesos hijos via EID 1 y encontramos `schtasks.exe` con el CommandLine completo de creación de la tarea.
 
@@ -154,7 +154,7 @@ schtasks /Create /RU "NT AUTHORITY\SYSTEM" /SC ONLOGON /TN "WiindowsUpdate" /TR 
 
 ---
 
-## Q8 — What is the full registry key added for persistence?
+## Q8 — As part of persistence, a registry key was created to ensure the script runs on user logon. What is the full registry key that was added?
 
 EID 13 (RegistryEvent Value Set) no estaba disponible en los logs. Sin embargo, en los eventos EID 1 se identificaron múltiples ejecuciones de `cmd.exe` invocando PowerShell con el flag `-EncodedCommand` (Base64). Al decodificar el payload en CyberChef se reveló un script que escribe una clave de registro Run.
 
@@ -357,7 +357,7 @@ index=main EventCode=1 earliest="03/21/2025:16:06:00" source="XmlWinEventLog:Mic
 <img width="1568" height="781" alt="image" src="https://github.com/user-attachments/assets/8f14654b-bfaf-4e20-bee2-a1ed3948bc84" />
 
 **Query (confirmación — ransom notes):**
-```spl
+```
 index=* EventCode=11 Image="*6as98v*"
 | table _time, TargetFilename
 | sort _time
@@ -490,7 +490,7 @@ index=main earliest="03/21/2025:16:06:00" source="XmlWinEventLog:Microsoft-Windo
 ```
 
 **Query (confirmación DNS):**
-```spl
+```
 index=* host=DC01 EventCode=22 Image="*rclone*"
 | table _time, QueryName, QueryResults
 | sort _time
