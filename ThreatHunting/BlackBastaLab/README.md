@@ -22,33 +22,6 @@ El ataque abarcó un período de aproximadamente 1 hora y 44 minutos (15:08 — 
 
 ---
 
-# IOC Summary
-
-| Tipo | Valor | Contexto |
-|------|-------|----------|
-| IP | 54.93.105.22 | C2 / Delivery server |
-| URL | http://54.93.105.22/Financial%20Records.zip | Descarga inicial del ZIP |
-| Archivo | Financial Records.zip | Vector de entrega |
-| Archivo | Financial Records.xlsm | Excel con macro malicioso |
-| Hash (SHA256) | 030E7AD9B95892B91A070AC725A77281645F6E75CFC4C88F53DBF448FFFD1E15 | Hash del Excel malicioso |
-| Archivo | F6w1S48.vbs | VBScript segundo stage |
-| DLL | WindowsUpdaterFX.dll | DLL maliciosa cargada por regsvr32 |
-| Archivo | Pancake.jpg.exe | Beacon C2 (doble extensión) |
-| Archivo | 6as98v.exe | Ransomware payload |
-| Hash (SHA256) | 7883F01096DB9BCF090C231749B6873036C27BA92451B212B8645770E1F0B8A | Hash del ransomware |
-| Scheduled Task | WiindowsUpdate | Persistencia (typo intencional en nombre) |
-| Registry Key | HKCU\Software\Microsoft\Windows\CurrentVersion\Run\WindowsUpdater | Persistencia Run Key |
-| Herramienta | PsExec64.exe | Lateral movement |
-| Herramienta | netscan.exe | Reconocimiento de red |
-| Herramienta | rclone v1.69.1 | Exfiltración |
-| Cloud | mega.co.nz | Destino de exfiltración |
-| Extensión | .basta | Extensión de archivos encriptados |
-| Usuario | knixon | Cuenta comprometida en ws1 |
-| Usuario | swhite | Cuenta comprometida en DC01 |
-| Host | 10.10.11.170 | IP de DC01 |
-
----
-
 # Analysis
 
 ## Q1 — What was the full URL used to download the malicious ZIP file?
