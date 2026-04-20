@@ -1,4 +1,4 @@
-# AD Breach Investigation Lab
+# FalconEye Lab
 **Plataforma:** CyberDefenders
 
 **Categoría:** Incident Response / Threat Hunting
