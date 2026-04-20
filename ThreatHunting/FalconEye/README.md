@@ -309,7 +309,7 @@ El segundo ticket fue el que el atacante usó exitosamente para acceder al paren
 ## Attack Timeline
 
 | Tiempo (UTC) | Host | Evento |
-|---|---|---|---|
+|---|---|---|
 | 2023-05-09 05:12:17 | CLIENT02 | hfs.exe (Http File Server) ejecutado por HelpDesk |
 | 2023-05-09 08:24:12 | CLIENT02 | Servicio "Automation security monitoring tasks" creado con unquoted path |
 | 2023-05-09 11:38:14 | CLIENT02 | Servicio "Monitoring service" creado con unquoted path |
